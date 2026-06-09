@@ -1,7 +1,7 @@
-# Pi-hole + Unbound Recursive DNS
+# Pi-hole + Unbound Recursieve DNS
 
-[![NL](https://img.shields.io/badge/lang-NL-orange?style=for-the-badge)](README.nl.md)
 [![EN](https://img.shields.io/badge/lang-EN-blue?style=for-the-badge)](README.md)
+[![NL](https://img.shields.io/badge/lang-NL-orange?style=for-the-badge)](README.nl.md)
 
 [![Pi-hole](https://img.shields.io/badge/Pi--hole-DNS%20sinkhole-96060C?style=for-the-badge&logo=pi-hole&logoColor=white)](https://pi-hole.net)
 [![Unbound](https://img.shields.io/badge/Unbound-Recursive%20DNS-005A9C?style=for-the-badge)](https://nlnetlabs.nl/projects/unbound/)
@@ -22,7 +22,7 @@ Part of the [pixelkeep homelab](https://github.com/pixelkeep/homelab-network) se
 
 ---
 
-## What this setup does
+## Wat dit doet
 
 Pi-hole provides DNS filtering, blocklists, and the web interface.
 
@@ -46,7 +46,7 @@ Unbound
 Root / TLD / authoritative DNS servers
 ```
 
-## Why Pi-hole + Unbound instead of Pi-hole alone
+## Waarom Pi-hole + Unbound in plaats van Pi-hole alleen
 
 Pi-hole alone requires an upstream DNS provider — typically a public resolver like Cloudflare (`1.1.1.1`) or Google (`8.8.8.8`). This means every DNS query that is not blocked by Pi-hole is forwarded to a third-party server. That third party can log, analyse, and profile all domains your network resolves.
 
@@ -64,7 +64,7 @@ The only trade-off: Unbound's first resolution for an uncached domain takes slig
 
 ---
 
-## Key references
+## Belangrijke referenties
 
 - Pi-hole documentation: <https://docs.pi-hole.net/>
 - Pi-hole Unbound guide: <https://docs.pi-hole.net/guides/dns/unbound/>
@@ -75,7 +75,7 @@ The only trade-off: Unbound's first resolution for an uncached domain takes slig
 
 ---
 
-## Contents
+## Inhoudsopgave
 
 - [What this setup does](#what-this-setup-does)
 - [Why Pi-hole + Unbound instead of Pi-hole alone](#why-pi-hole--unbound-instead-of-pi-hole-alone)
@@ -118,7 +118,7 @@ The only trade-off: Unbound's first resolution for an uncached domain takes slig
 
 ---
 
-## Prerequisites
+## Vereisten
 
 This guide supports the following deployment models:
 
@@ -169,7 +169,7 @@ Deployment guidance:
 
 ---
 
-## Proxmox LXC preparation
+## Proxmox LXC voorbereiding
 
 If you are installing on Proxmox VE, use a lightweight Debian 13 unprivileged LXC container.
 
@@ -323,7 +323,7 @@ Expected result: `root`
 
 ---
 
-## Debian or Raspberry Pi preparation
+## Debian of Raspberry Pi voorbereiding
 
 Update the system and install required base packages:
 
@@ -352,7 +352,7 @@ ping -c 3 debian.org
 
 ---
 
-## Pre-flight checks
+## Controle voor installatie
 
 Check if anything is already using DNS port 53:
 
@@ -371,7 +371,7 @@ If these tests fail, your ISP, router, or firewall may be blocking direct DNS tr
 
 ---
 
-## Install Pi-hole
+## Pi-hole installeren
 
 Log in over SSH using the administrative user:
 
@@ -426,7 +426,7 @@ pihole status
 
 ---
 
-## Install and configure Unbound
+## Unbound installeren en configureren
 
 Install Unbound if not already installed:
 
@@ -506,7 +506,7 @@ sudo rm -f /etc/unbound/unbound.conf.d/resolvconf_resolvers.conf
 
 ---
 
-## Validate and restart Unbound
+## Unbound valideren en herstarten
 
 ```bash
 sudo unbound-checkconf
@@ -544,7 +544,7 @@ dnssec.works        → NOERROR with ad flag  (valid DNSSEC, correctly accepted)
 
 ---
 
-## Point Pi-hole to Unbound
+## Pi-hole naar Unbound wijzen
 
 Open the Pi-hole admin UI:
 
@@ -574,7 +574,7 @@ sudo pihole reloaddns
 
 ---
 
-## Verify Pi-hole is using Unbound
+## Verifieer dat Pi-hole Unbound gebruikt
 
 From a client machine, query Pi-hole:
 
@@ -592,7 +592,7 @@ You should see client queries arriving at Pi-hole, which forwards allowed domain
 
 ---
 
-## Quick validation
+## Snelle validatie
 
 ```bash
 # Test Unbound directly
@@ -619,7 +619,7 @@ dnssec.works        → NOERROR with ad flag
 
 ---
 
-## Security hardening
+## Beveiliging
 
 Security baseline:
 
@@ -634,7 +634,7 @@ Updates:                Debian security updates automatic
 Pi-hole updates:        manual after backup/snapshot
 ```
 
-### Network exposure baseline
+### Netwerk blootstelling
 
 Recommended exposure:
 
@@ -1018,7 +1018,7 @@ sudo tail -n 50 /var/log/unattended-upgrades/unattended-upgrades.log
 
 ---
 
-## Local DNS — wildcard voor interne services
+## Lokale DNS — wildcard voor interne services
 
 Pi-hole kan alle subdomains van een intern domein naar een reverse proxy sturen
 zodat je `nas.pixelkeep.nl` intern gebruikt in plaats van een IP adres.
@@ -1097,7 +1097,7 @@ misc.etc_dnsmasq_d is beter als je meerdere complexe configuratiebestanden hebt.
 
 ---
 
-## Netwerk configuratie — pixelkeep.nl
+## Netwerkconfiguratie — pixelkeep.nl
 
     Primary Pi-hole:    RPDO01    192.168.20.11    Raspberry Pi + Unbound
     Secondary Pi-hole:  DEBPIH01  192.168.20.12    Proxmox LXC + Unbound
@@ -1114,7 +1114,7 @@ Uitzondering:
 
 ---
 
-## Sources
+## Bronnen
 
 - Pi-hole documentation: <https://docs.pi-hole.net/>
 - Pi-hole Unbound integration guide: <https://docs.pi-hole.net/guides/dns/unbound/>
